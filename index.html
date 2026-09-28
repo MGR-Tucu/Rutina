@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta name="apple-mobile-web-app-title" content="Rutina">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" href="apple-touch-icon.png">
+  <title>Rutina de Calistenia</title>
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --line:#e4e9f2;
+      --text:#172033;
+      --muted:#65708a;
+      --accent:#5a7be7;
+      --accent-soft:#edf2ff;
+      --warn:#fff6e7;
+      --shadow:0 1px 4px rgba(10,20,40,.05), 0 10px 28px rgba(10,20,40,.04);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.48;
+      padding-bottom:86px;
+    }
+    a{color:var(--accent);text-decoration:none}
+    .wrap{max-width:860px;margin:0 auto;padding:16px}
+    .hero{
+      position:sticky;top:0;z-index:10;
+      background:rgba(245,247,251,.92);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
+    }
+    .eyebrow{font-size:14px;color:var(--muted);margin:0 0 4px}
+    h1{font-size:32px;line-height:1.1;margin:0 0 6px}
+    h2{font-size:26px;line-height:1.15;margin:0 0 12px}
+    h3{font-size:18px;line-height:1.2;margin:0 0 8px}
+    p{margin:8px 0}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      margin:12px 0;
+    }
+    .soft{background:#f9fbff}
+    .accent-box{
+      background:var(--accent-soft);
+      border:1px solid #d9e3ff;
+      border-radius:16px;
+      padding:12px 14px;
+      color:#314979;
+    }
+    .warn{background:var(--warn)}
+    .grid,.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .pill{
+      display:inline-block;
+      padding:7px 12px;
+      background:var(--accent-soft);
+      color:#324a79;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:600;
+      margin:2px 6px 2px 0;
+    }
+    .list-link{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:14px 16px;border-radius:18px;background:#fff;border:1px solid var(--line);
+      box-shadow:var(--shadow);margin:10px 0;color:inherit
+    }
+    .list-link .num{font-size:12px;font-weight:700;color:var(--muted)}
+    .list-link .name{font-size:18px;font-weight:700;margin-top:2px}
+    .list-link .meta{font-size:14px;color:var(--muted);margin-top:4px}
+    .chev{font-size:30px;color:#a0abc1;line-height:1}
+    .exercise{padding-top:10px;margin-top:18px}
+    .illustration{
+      border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#fff;margin-bottom:14px;
+    }
+    .summary{font-weight:600;color:#314979;background:var(--accent-soft);padding:12px 14px;border-radius:16px}
+    .position{background:#fafcff;border:1px solid #dde5f5;border-radius:16px;padding:12px 14px;color:#2d405f}
+    ol,ul{margin:8px 0 0;padding-left:20px}
+    li{margin:6px 0}
+    .back{display:inline-block;margin-top:4px;font-weight:700}
+    .section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+    .muted{color:var(--muted)}
+    .nav{
+      position:fixed;left:0;right:0;bottom:0;z-index:20;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(16px);
+      border-top:1px solid var(--line);
+      padding-bottom:env(safe-area-inset-bottom);
+    }
+    .nav .bar{max-width:860px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+    .nav a{padding:10px 4px 8px;text-align:center;font-size:12px;color:var(--muted)}
+    .nav .ico{display:block;font-size:22px;margin-bottom:2px}
+    .spacer{height:6px}
+    @media (max-width:640px){
+      h1{font-size:28px}
+      h2{font-size:22px}
+      .grid,.grid-2{grid-template-columns:1fr}
+    }
+    svg{display:block;width:100%;height:auto}
+  
+    .frames{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
+    .frame{margin:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#f8fbff,#edf2ff)}
+    .tag{display:inline-block;margin:10px 0 0 12px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#44598a;background:#fff;border:1px solid #d9e3ff;border-radius:999px;padding:4px 10px}
+    .frame svg{padding:0 6px}
+    .frame figcaption{padding:0 14px 12px;font-size:14px;line-height:1.35;color:#44557a}
+    .box{min-width:0}
+    @media (max-width:640px){.frames{grid-template-columns:1fr}}
+    .hidden{display:none !important}
+    .exercise{scroll-margin-top:110px}
+    .nav a.active{color:var(--accent);font-weight:700}
+    .row{display:flex;align-items:center;gap:10px;margin:10px 0}
+    .row .list-link{flex:1;margin:0;min-width:0}
+    .check{flex:none;width:46px;height:46px;border-radius:50%;border:2px solid #b9c7eb;background:#fff;color:#fff;font-size:24px;line-height:1;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:var(--shadow)}
+    .row.done .check{background:var(--accent);border-color:var(--accent)}
+    .row.done .check::after{content:"\2713"}
+    .row.done .name{text-decoration:line-through;color:var(--muted)}
+    .bar-track{height:16px;border-radius:999px;background:#e4e9f2;overflow:hidden;margin:12px 0 8px}
+    .bar-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#7f9bf0,#5a7be7);transition:width .35s ease}
+    .bar-info{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+    .bar-big{font-size:34px;font-weight:800;line-height:1}
+    .btn{display:inline-block;margin-top:6px;padding:10px 16px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer}
+    .done-msg{margin-top:10px}
+</style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Rutina en casa · 3 días por semana · Tu progreso se guarda en este dispositivo</p>
+      <h1>Calistenia + fuerza</h1>
+      <p class="muted">Pensada para el iPhone. Usá los botones de abajo para moverte.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="inicio" data-view>
+    <section class="card">
+      <h2>Inicio</h2>
+      <p><strong>Estructura sugerida:</strong> primeras 2 semanas hacé <strong>2 vueltas</strong>. Después pasá a <strong>3 vueltas</strong>.</p>
+      <div class="grid">
+        <div class="accent-box">
+          <strong>Descanso</strong><br>
+          30–45 segundos entre ejercicios y 1–2 minutos entre vueltas.
+        </div>
+        <div class="accent-box">
+          <strong>Materiales</strong><br>
+          Colchoneta, silla firme, banda elástica, mancuernas de 1–2 kg y una mesada o mesa firme.
+        </div>
+      </div>
+      <p style="margin-top:14px"><a href="#rutina"><strong>Ir a la rutina →</strong></a></p>
+    </section>
+
+    <section class="card">
+      <h2>Progreso del día</h2>
+      <div class="bar-info"><span class="bar-big" id="pct">0%</span><span class="muted" id="count">0 de 8 ejercicios</span></div>
+      <div class="bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"><div class="bar-fill" id="fill"></div></div>
+      <p class="muted" id="msg">Marcá cada ejercicio en la pestaña Rutina y la barra avanza sola.</p>
+      <button type="button" class="btn" id="reset">Reiniciar el día</button>
+    </section>
+    </div>
+
+    <div id="rutina" data-view class="hidden">
+    <section class="card">
+      <div class="section-title">
+        <h2>Rutina</h2>
+        <span class="muted" id="rcount">0/8 hechos</span>
+      </div>
+      <p class="muted">Tocá el círculo para marcar el ejercicio como hecho. Tocá el nombre para abrir su ficha.</p>
+
+      <div class="row" data-id="sentadilla">
+        <button type="button" class="check" aria-pressed="false" aria-label="Marcar Sentadilla a silla como hecho"></button>
+        <a class="list-link" href="#sentadilla">
+          <div><div class="num">1</div><div class="name">Sentadilla a silla</div><div class="meta">12–15 repeticiones · De pie, frente a una silla</div></div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+      <div class="row" data-id="puente">
+        <button type="button" class="check" aria-pressed="false" aria-label="Marcar Puente de glúteos como hecho"></button>
+        <a class="list-link" href="#puente">
+          <div><div class="num">2</div><div class="name">Puente de glúteos</div><div class="meta">15 repeticiones · Acostada boca arriba</div></div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+      <div class="row" data-id="remo">
+        <button type="button" class="check" aria-pressed="false" aria-label="Marcar Remo con banda como hecho"></button>
+        <a class="list-link" href="#remo">
+          <div><div class="num">3</div><div class="name">Remo con banda</div><div class="meta">12–15 repeticiones · Sentada en el piso</div></div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+      <div class="row" data-id="flexiones">
+        <button type="button" class="check" aria-pressed="false" aria-label="Marcar Flexiones inclinadas como hecho"></button>
+        <a class="list-link" href="#flexiones">
+          <div><div class="num">4</div><div class="name">Flexiones inclinadas</div><div class="meta">8–12 repeticiones · De pie, manos apoyadas</div></div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+      <div class="row" data-id="laterales">
+        <button type="button" class="check" aria-pressed="false" aria-label="Marcar Elevaciones laterales como hecho"></button>
+        <a class="list-link" href="#laterales">
+          <div><div class="num">5</div><div class="name">Elevaciones laterales</div><div class="meta">10–12 repeticiones · De pie, con mancuernas</div></div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+      <div class="row" data-id="estocada">
+        <button type="button" class="check" aria-pressed="false" aria-label="Marcar Estocada hacia atrás como hecho"></button>
+        <a class="list-link" href="#estocada">
+          <div><div class="num">6</div><div class="name">Estocada hacia atrás</div><div class="meta">8–10 por pierna · De pie</div></div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+      <div class="row" data-id="plancha">
+        <button type="button" class="check" aria-pressed="false" aria-label="Marcar Plancha como hecho"></button>
+        <a class="list-link" href="#plancha">
+          <div><div class="num">7</div><div class="name">Plancha</div><div class="meta">20–30 segundos · Boca abajo sobre antebrazos</div></div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+      <div class="row" data-id="birddog">
+        <button type="button" class="check" aria-pressed="false" aria-label="Marcar Bird-dog como hecho"></button>
+        <a class="list-link" href="#birddog">
+          <div><div class="num">8</div><div class="name">Bird-dog</div><div class="meta">8–10 por lado · En cuatro apoyos</div></div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+    </section>
+    </div>
+
+    <section id="fichas" data-view class="hidden">
+      <div class="card soft"><h2>Fichas de ejercicios</h2><p class="muted">Cada ficha muestra dos cuadros con una figura humana: la posición de inicio y la posición final. Las flechas indican hacia dónde se mueve el cuerpo.</p></div>
+
+      <article id="sentadilla" class="card exercise">
+        <div class="frames">
+          <figure class="frame"><span class="tag">1 · Inicio</span><svg viewBox="0 40 380 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sentadilla a silla, posición inicial"><line x1="14" y1="300" x2="366" y2="300" stroke="#cfd8ea" stroke-width="3" stroke-linecap="round"/><ellipse cx="225" cy="301" rx="46" ry="5" fill="#9aa8c9" opacity=".25"/><rect x="118" y="161" width="9" height="84" rx="4" fill="#a98452"/><rect x="118" y="245" width="9" height="55" rx="3" fill="#a98452"/><rect x="187" y="245" width="9" height="55" rx="3" fill="#a98452"/><rect x="116" y="245" width="82" height="9" rx="4" fill="#cfa66f"/><path d="M215.0,108.0 L217.3,151.9" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M217.3,151.9 L220.8,191.8" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="220.8" cy="191.8" r="6.2" fill="#d6a984"/><path d="M215.0,184.0 L211.2,239.9" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M211.2,239.9 L206.0,293.6" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M203.0,293.6 L228.0,293.6" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M215.0,184.0 L215.0,108.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="215.0" cy="184.0" r="15.5" fill="#243057"/><path d="M215.0,184.0 L215.7,240.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M215.7,240.0 L215.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M212.0,294.0 L237.0,294.0" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M215.0,108.0 L215.0,96.0" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M199.0,80.0 Q183.0,82.0 186.0,100.0" stroke="#4b3527" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="213.5" cy="83.0" r="19" fill="#4b3527"/><circle cx="218.0" cy="86.5" r="16.5" fill="#f0c8a5"/><circle cx="226.5" cy="85.5" r="1.9" fill="#2b2f42"/><circle cx="215.0" cy="108.0" r="8.5" fill="#5a7be7"/><path d="M215.0,108.0 L219.6,151.8" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M219.6,151.8 L225.2,191.4" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="225.2" cy="191.4" r="6.5" fill="#f0c8a5"/></svg><figcaption>De pie, de espaldas a la silla, pies al ancho de caderas.</figcaption></figure>
+          <figure class="frame"><span class="tag">2 · Final</span><svg viewBox="0 40 380 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sentadilla a silla, posición final"><line x1="14" y1="300" x2="366" y2="300" stroke="#cfd8ea" stroke-width="3" stroke-linecap="round"/><ellipse cx="225" cy="301" rx="46" ry="5" fill="#9aa8c9" opacity=".25"/><rect x="118" y="161" width="9" height="84" rx="4" fill="#a98452"/><rect x="118" y="245" width="9" height="55" rx="3" fill="#a98452"/><rect x="187" y="245" width="9" height="55" rx="3" fill="#a98452"/><rect x="116" y="245" width="82" height="9" rx="4" fill="#cfa66f"/><path d="M208.6,167.7 L252.4,172.3" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M252.4,172.3 L292.3,175.1" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="292.3" cy="175.1" r="6.2" fill="#d6a984"/><path d="M165.0,230.0 L219.8,241.5" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M219.8,241.5 L207.0,294.0" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M204.0,294.0 L229.0,294.0" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M165.0,230.0 L208.6,167.7" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="165.0" cy="230.0" r="15.5" fill="#243057"/><path d="M165.0,230.0 L220.1,240.2" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M220.1,240.2 L215.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M212.0,294.0 L237.0,294.0" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M208.6,167.7 L213.1,156.6" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M204.2,135.8 Q189.4,131.8 192.2,150.9" stroke="#4b3527" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="216.6" cy="144.0" r="19" fill="#4b3527"/><circle cx="219.4" cy="148.9" r="16.5" fill="#f0c8a5"/><circle cx="227.7" cy="151.2" r="1.9" fill="#2b2f42"/><circle cx="208.6" cy="167.7" r="8.5" fill="#5a7be7"/><path d="M208.6,167.7 L252.6,169.3" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M252.6,169.3 L292.6,169.3" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="292.6" cy="169.3" r="6.5" fill="#f0c8a5"/><path d="M278.0,200.0 L278.0,232.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="278.0,246.0 269.5,232.0 286.5,232.0" fill="#5a7be7"/></svg><figcaption>Cadera atrás, rodillas flexionadas, brazos adelante. Tocás la silla y volvés.</figcaption></figure>
+        </div>
+        <h2>1. Sentadilla a silla</h2>
+        <p><span class="pill">12–15 repeticiones</span><span class="pill">Piernas y glúteos</span></p>
+        <div class="position"><strong>Posición inicial:</strong> de pie, delante de una silla firme (la silla queda detrás tuyo), con los pies al ancho de las caderas.</div>
+        <div class="summary">Bajá la cadera hacia atrás como si fueras a sentarte, tocá la silla suavemente y volvé a subir.</div>
+        <div class="grid-2">
+          <div class="box"><h3>Cómo hacerlo</h3><ol><li>Parate erguida delante de la silla.</li><li>Llevá la cadera hacia atrás y flexioná rodillas.</li><li>Tocá la silla sin dejar caer el peso.</li><li>Empujá el piso con los pies y volvé a subir.</li></ol></div>
+          <div class="box warn"><h3>Qué cuidar</h3><ul><li>Pecho abierto y abdomen suave.</li><li>Rodillas alineadas con los pies.</li><li>No colapses hacia adelante.</li></ul></div>
+        </div>
+        <a class="back" href="#rutina">← Volver a la rutina</a>
+      </article>
+
+      <article id="puente" class="card exercise">
+        <div class="frames">
+          <figure class="frame"><span class="tag">1 · Inicio</span><svg viewBox="0 170 380 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Puente de glúteos, posición inicial"><rect x="20" y="300" width="340" height="10" rx="5" fill="#c3d0f3"/><ellipse cx="215" cy="301" rx="100" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M140.0,285.0 L184.0,284.1" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M184.0,284.1 L223.0,293.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="223.0" cy="293.0" r="6.2" fill="#d6a984"/><path d="M216.0,285.0 L261.5,252.4" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M261.5,252.4 L296.0,294.0" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M293.0,294.0 L318.0,294.0" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M216.0,285.0 L140.0,285.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="216.0" cy="285.0" r="15.5" fill="#243057"/><path d="M216.0,285.0 L258.6,248.7" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M258.6,248.7 L288.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M285.0,294.0 L310.0,294.0" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M140.0,285.0 L128.1,283.5" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="115.0" cy="283.4" r="19" fill="#4b3527"/><circle cx="119.0" cy="279.4" r="16.5" fill="#f0c8a5"/><circle cx="119.1" cy="270.8" r="1.9" fill="#2b2f42"/><circle cx="140.0" cy="285.0" r="8.5" fill="#5a7be7"/><path d="M140.0,285.0 L184.0,284.1" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M184.0,284.1 L223.0,293.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="223.0" cy="293.0" r="6.5" fill="#f0c8a5"/></svg><figcaption>Boca arriba, rodillas flexionadas, pies apoyados y brazos al costado.</figcaption></figure>
+          <figure class="frame"><span class="tag">2 · Final</span><svg viewBox="0 170 380 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Puente de glúteos, posición final"><rect x="20" y="300" width="340" height="10" rx="5" fill="#c3d0f3"/><ellipse cx="215" cy="301" rx="100" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M140.0,285.0 L184.0,284.1" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M184.0,284.1 L223.0,293.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="223.0" cy="293.0" r="6.2" fill="#d6a984"/><path d="M211.4,259.0 L266.5,248.8" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M266.5,248.8 L296.0,294.0" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M293.0,294.0 L318.0,294.0" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M211.4,259.0 L140.0,285.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="211.4" cy="259.0" r="15.5" fill="#243057"/><path d="M211.4,259.0 L265.6,244.9" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M265.6,244.9 L288.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M285.0,294.0 L310.0,294.0" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M140.0,285.0 L128.1,283.5" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="115.0" cy="283.4" r="19" fill="#4b3527"/><circle cx="119.0" cy="279.4" r="16.5" fill="#f0c8a5"/><circle cx="119.1" cy="270.8" r="1.9" fill="#2b2f42"/><circle cx="140.0" cy="285.0" r="8.5" fill="#5a7be7"/><path d="M140.0,285.0 L184.0,284.1" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M184.0,284.1 L223.0,293.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="223.0" cy="293.0" r="6.5" fill="#f0c8a5"/><path d="M217.4,227.0 L217.4,195.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="217.4,181.0 225.9,195.0 208.9,195.0" fill="#5a7be7"/></svg><figcaption>Pelvis arriba: hombros, cadera y rodillas quedan en una línea.</figcaption></figure>
+        </div>
+        <h2>2. Puente de glúteos</h2>
+        <p><span class="pill">15 repeticiones</span><span class="pill">Glúteos e isquiotibiales</span></p>
+        <div class="position"><strong>Posición inicial:</strong> acostada boca arriba, con rodillas flexionadas y ambos pies apoyados.</div>
+        <div class="summary">Elevá la pelvis contrayendo glúteos hasta alinear hombros, cadera y rodillas. Bajá lento.</div>
+        <div class="grid-2">
+          <div class="box"><h3>Cómo hacerlo</h3><ol><li>Apoyá toda la planta del pie.</li><li>Activá abdomen y apretá glúteos.</li><li>Elevá la pelvis sin impulsarte.</li><li>Sostené 1–2 segundos y descendé controlado.</li></ol></div>
+          <div class="box warn"><h3>Qué cuidar</h3><ul><li>No arquees de más la zona lumbar.</li><li>Subí por contracción de glúteos.</li><li>Mantené el cuello relajado.</li></ul></div>
+        </div>
+        <a class="back" href="#rutina">← Volver a la rutina</a>
+      </article>
+
+      <article id="remo" class="card exercise">
+        <div class="frames">
+          <figure class="frame"><span class="tag">1 · Inicio</span><svg viewBox="0 150 380 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Remo con banda, posición inicial"><rect x="20" y="300" width="340" height="10" rx="5" fill="#c3d0f3"/><ellipse cx="205" cy="301" rx="105" ry="5" fill="#9aa8c9" opacity=".25"/><ellipse cx="268.1" cy="279.7" rx="6" ry="9" fill="none" stroke="#f2a03d" stroke-width="4.5"/><path d="M147.3,209.0 L187.7,226.5" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M187.7,226.5 L227.3,221.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="227.3" cy="221.0" r="6.2" fill="#d6a984"/><path d="M150.0,285.0 L206.0,287.2" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M206.0,287.2 L259.8,290.7" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M258.8,293.5 L267.4,270.1" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M150.0,285.0 L147.3,209.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="150.0" cy="285.0" r="15.5" fill="#243057"/><path d="M150.0,285.0 L205.9,281.3" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M205.9,281.3 L259.0,291.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M258.0,293.8 L266.5,270.3" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M147.3,209.0 L147.8,197.1" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M132.3,180.5 Q116.3,181.9 119.3,200.1" stroke="#4b3527" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="146.7" cy="184.0" r="19" fill="#4b3527"/><circle cx="151.1" cy="187.7" r="16.5" fill="#f0c8a5"/><circle cx="159.6" cy="187.0" r="1.9" fill="#2b2f42"/><circle cx="147.3" cy="209.0" r="8.5" fill="#5a7be7"/><path d="M147.3,209.0 L190.6,216.9" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M190.6,216.9 L230.2,222.9" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="230.2" cy="222.9" r="6.5" fill="#f0c8a5"/><path d="M268.1,279.7 L230.2,222.9" stroke="#f2a03d" stroke-width="4.5" stroke-linecap="round" fill="none"/><rect x="225.2" y="214.9" width="10" height="16" rx="4" fill="#f2a03d"/></svg><figcaption>Sentada, piernas estiradas, banda en las plantas de los pies y brazos adelante.</figcaption></figure>
+          <figure class="frame"><span class="tag">2 · Final</span><svg viewBox="0 150 380 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Remo con banda, posición final"><rect x="20" y="300" width="340" height="10" rx="5" fill="#c3d0f3"/><ellipse cx="205" cy="301" rx="105" ry="5" fill="#9aa8c9" opacity=".25"/><ellipse cx="268.1" cy="279.7" rx="6" ry="9" fill="none" stroke="#f2a03d" stroke-width="4.5"/><path d="M147.3,209.0 L142.7,252.8" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M142.7,252.8 L182.1,245.9" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="182.1" cy="245.9" r="6.2" fill="#d6a984"/><path d="M150.0,285.0 L206.0,287.2" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M206.0,287.2 L259.8,290.7" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M258.8,293.5 L267.4,270.1" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M150.0,285.0 L147.3,209.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="150.0" cy="285.0" r="15.5" fill="#243057"/><path d="M150.0,285.0 L205.9,281.3" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M205.9,281.3 L259.0,291.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M258.0,293.8 L266.5,270.3" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M147.3,209.0 L147.8,197.1" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M132.3,180.5 Q116.3,181.9 119.3,200.1" stroke="#4b3527" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="146.7" cy="184.0" r="19" fill="#4b3527"/><circle cx="151.1" cy="187.7" r="16.5" fill="#f0c8a5"/><circle cx="159.6" cy="187.0" r="1.9" fill="#2b2f42"/><circle cx="147.3" cy="209.0" r="8.5" fill="#5a7be7"/><path d="M147.3,209.0 L138.2,252.1" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M138.2,252.1 L176.8,241.7" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="176.8" cy="241.7" r="6.5" fill="#f0c8a5"/><path d="M268.1,279.7 L176.8,241.7" stroke="#f2a03d" stroke-width="4.5" stroke-linecap="round" fill="none"/><rect x="171.8" y="233.7" width="10" height="16" rx="4" fill="#f2a03d"/><path d="M262.0,214.0 L214.0,214.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="200.0,214.0 214.0,205.5 214.0,222.5" fill="#5a7be7"/></svg><figcaption>Codos hacia atrás, manos cerca de las costillas, omóplatos juntos.</figcaption></figure>
+        </div>
+        <h2>3. Remo con banda</h2>
+        <p><span class="pill">12–15 repeticiones</span><span class="pill">Espalda y brazos</span></p>
+        <div class="position"><strong>Posición inicial:</strong> sentada en el piso con las piernas estiradas, espalda erguida y la banda pasada por las plantas de los pies, sostenida con ambas manos.</div>
+        <div class="summary">Tirá de la banda llevando los codos hacia atrás y acercando los omóplatos entre sí.</div>
+        <div class="grid-2">
+          <div class="box"><h3>Cómo hacerlo</h3><ol><li>Mantené el pecho abierto.</li><li>Llevá los codos hacia atrás, cerca del cuerpo.</li><li>Juntá suavemente los omóplatos.</li><li>Volvé lento a la posición inicial.</li></ol></div>
+          <div class="box warn"><h3>Qué cuidar</h3><ul><li>No subas los hombros hacia las orejas.</li><li>No arquees la espalda.</li><li>Mové la banda con control.</li></ul></div>
+        </div>
+        <a class="back" href="#rutina">← Volver a la rutina</a>
+      </article>
+
+      <article id="flexiones" class="card exercise">
+        <div class="frames">
+          <figure class="frame"><span class="tag">1 · Inicio</span><svg viewBox="0 70 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flexiones inclinadas, posición inicial"><line x1="14" y1="300" x2="366" y2="300" stroke="#cfd8ea" stroke-width="3" stroke-linecap="round"/><ellipse cx="160" cy="301" rx="110" ry="5" fill="#9aa8c9" opacity=".25"/><rect x="270" y="172" width="108" height="12" rx="5" fill="#aab7d6"/><rect x="276" y="184" width="96" height="116" fill="#dbe3f4"/><rect x="286" y="196" width="76" height="90" rx="6" fill="none" stroke="#c2ccdf" stroke-width="3"/><path d="M194.6,134.7 L227.0,164.4" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M227.0,164.4 L267.0,166.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="267.0" cy="166.0" r="6.2" fill="#d6a984"/><path d="M146.1,193.3 L110.4,236.4" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M110.4,236.4 L83.0,278.0" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M80.6,276.2 L100.3,291.5" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M146.1,193.3 L194.6,134.7" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="146.1" cy="193.3" r="15.5" fill="#243057"/><path d="M146.1,193.3 L110.4,236.4" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M110.4,236.4 L76.0,278.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M73.6,276.2 L93.3,291.5" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M194.6,134.7 L202.9,126.0" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="210.7" cy="115.6" r="19" fill="#4b3527"/><circle cx="211.6" cy="121.2" r="16.5" fill="#f0c8a5"/><circle cx="218.4" cy="126.3" r="1.9" fill="#2b2f42"/><circle cx="194.6" cy="134.7" r="8.5" fill="#5a7be7"/><path d="M194.6,134.7 L233.4,155.3" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M233.4,155.3 L272.0,166.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="272.0" cy="166.0" r="6.5" fill="#f0c8a5"/></svg><figcaption>Manos en el borde de una mesada firme, brazos estirados, cuerpo en línea recta.</figcaption></figure>
+          <figure class="frame"><span class="tag">2 · Final</span><svg viewBox="0 70 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flexiones inclinadas, posición final"><line x1="14" y1="300" x2="366" y2="300" stroke="#cfd8ea" stroke-width="3" stroke-linecap="round"/><ellipse cx="160" cy="301" rx="110" ry="5" fill="#9aa8c9" opacity=".25"/><rect x="270" y="172" width="108" height="12" rx="5" fill="#aab7d6"/><rect x="276" y="184" width="96" height="116" fill="#dbe3f4"/><rect x="286" y="196" width="76" height="90" rx="6" fill="none" stroke="#c2ccdf" stroke-width="3"/><path d="M213.5,152.7 L235.6,190.8" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M235.6,190.8 L267.0,166.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="267.0" cy="166.0" r="6.2" fill="#d6a984"/><path d="M157.3,203.9 L115.9,241.6" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M115.9,241.6 L83.0,278.0" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M80.6,276.2 L100.3,291.5" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M157.3,203.9 L213.5,152.7" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="157.3" cy="203.9" r="15.5" fill="#243057"/><path d="M157.3,203.9 L115.9,241.6" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M115.9,241.6 L76.0,278.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M73.6,276.2 L93.3,291.5" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M213.5,152.7 L222.9,145.3" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="232.2" cy="136.0" r="19" fill="#4b3527"/><circle cx="232.2" cy="141.7" r="16.5" fill="#f0c8a5"/><circle cx="238.3" cy="147.8" r="1.9" fill="#2b2f42"/><circle cx="213.5" cy="152.7" r="8.5" fill="#5a7be7"/><path d="M213.5,152.7 L239.0,188.6" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M239.0,188.6 L272.0,166.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="272.0" cy="166.0" r="6.5" fill="#f0c8a5"/></svg><figcaption>Los codos se flexionan y el pecho se acerca a la mesada.</figcaption></figure>
+        </div>
+        <h2>4. Flexiones inclinadas</h2>
+        <p><span class="pill">8–12 repeticiones</span><span class="pill">Pecho, hombros y tríceps</span></p>
+        <div class="position"><strong>Posición inicial:</strong> de pie, con las manos apoyadas en una mesada, mesa o pared firme, y el cuerpo inclinado en línea recta.</div>
+        <div class="summary">Alineá el cuerpo como un bloque, acercá el pecho al apoyo y empujá para volver.</div>
+        <div class="grid-2">
+          <div class="box"><h3>Cómo hacerlo</h3><ol><li>Ubicá las manos al ancho de hombros.</li><li>Mantené cabeza, tronco y piernas alineados.</li><li>Flexioná codos y acercá el pecho.</li><li>Empujá para volver sin perder la línea corporal.</li></ol></div>
+          <div class="box warn"><h3>Qué cuidar</h3><ul><li>No hundas la cintura.</li><li>Cuanto más bajo el apoyo, más difícil.</li><li>Respirá fluido durante el movimiento.</li></ul></div>
+        </div>
+        <a class="back" href="#rutina">← Volver a la rutina</a>
+      </article>
+
+      <article id="laterales" class="card exercise">
+        <div class="frames">
+          <figure class="frame"><span class="tag">1 · Inicio</span><svg viewBox="0 30 380 285" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elevaciones laterales, posición inicial"><line x1="14" y1="300" x2="366" y2="300" stroke="#cfd8ea" stroke-width="3" stroke-linecap="round"/><ellipse cx="190" cy="301" rx="50" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M180.0,178.0 L176.5,236.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M176.5,236.0 L173.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><ellipse cx="169" cy="294" rx="12.5" ry="6.2" fill="#f4845f"/><path d="M200.0,178.0 L203.5,236.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M203.5,236.0 L207.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><ellipse cx="211" cy="294" rx="12.5" ry="6.2" fill="#f4845f"/><path d="M173,176 h34 l3,24 h-40 z" fill="#243057"/><polygon points="165,108 215,108 206,186 174,186" fill="#5a7be7" stroke="#5a7be7" stroke-width="14" stroke-linejoin="round"/><path d="M190.0,94.0 L190.0,110.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="190.0" cy="84.0" r="18" fill="#f0c8a5"/><path d="M170.5,85 A19.5,19.5 0 0 1 209.5,85 Q190,76 170.5,85 Z" fill="#4b3527"/><circle cx="190.0" cy="62.0" r="9" fill="#4b3527"/><circle cx="183.5" cy="90.0" r="1.9" fill="#2b2f42"/><circle cx="196.5" cy="90.0" r="1.9" fill="#2b2f42"/><path d="M186,97 Q190,100.5 194,97" stroke="#2b2f42" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="166.0" cy="113.0" r="8" fill="#5a7be7"/><path d="M166.0,113.0 L160.6,156.7" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M160.6,156.7 L157.2,196.5" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="157.2" cy="196.5" r="6.5" fill="#f0c8a5"/><rect x="148.2" y="189.5" width="18" height="14" rx="4" fill="#3a4152"/><circle cx="214.0" cy="113.0" r="8" fill="#5a7be7"/><path d="M214.0,113.0 L219.4,156.7" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M219.4,156.7 L222.8,196.5" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="222.8" cy="196.5" r="6.5" fill="#f0c8a5"/><rect x="213.8" y="189.5" width="18" height="14" rx="4" fill="#3a4152"/></svg><figcaption>De pie, una mancuerna en cada mano, brazos al costado.</figcaption></figure>
+          <figure class="frame"><span class="tag">2 · Final</span><svg viewBox="0 30 380 285" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elevaciones laterales, posición final"><line x1="14" y1="300" x2="366" y2="300" stroke="#cfd8ea" stroke-width="3" stroke-linecap="round"/><ellipse cx="190" cy="301" rx="50" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M180.0,178.0 L176.5,236.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M176.5,236.0 L173.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><ellipse cx="169" cy="294" rx="12.5" ry="6.2" fill="#f4845f"/><path d="M200.0,178.0 L203.5,236.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M203.5,236.0 L207.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><ellipse cx="211" cy="294" rx="12.5" ry="6.2" fill="#f4845f"/><path d="M173,176 h34 l3,24 h-40 z" fill="#243057"/><polygon points="165,108 215,108 206,186 174,186" fill="#5a7be7" stroke="#5a7be7" stroke-width="14" stroke-linejoin="round"/><path d="M190.0,94.0 L190.0,110.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="190.0" cy="84.0" r="18" fill="#f0c8a5"/><path d="M170.5,85 A19.5,19.5 0 0 1 209.5,85 Q190,76 170.5,85 Z" fill="#4b3527"/><circle cx="190.0" cy="62.0" r="9" fill="#4b3527"/><circle cx="183.5" cy="90.0" r="1.9" fill="#2b2f42"/><circle cx="196.5" cy="90.0" r="1.9" fill="#2b2f42"/><path d="M186,97 Q190,100.5 194,97" stroke="#2b2f42" stroke-width="1.6" fill="none" stroke-linecap="round"/><circle cx="166.0" cy="113.0" r="8" fill="#5a7be7"/><path d="M166.0,113.0 L122.2,117.6" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M122.2,117.6 L82.3,119.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="82.3" cy="119.0" r="6.5" fill="#f0c8a5"/><rect x="73.3" y="112.0" width="18" height="14" rx="4" fill="#3a4152"/><circle cx="214.0" cy="113.0" r="8" fill="#5a7be7"/><path d="M214.0,113.0 L257.8,117.6" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M257.8,117.6 L297.7,119.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="297.7" cy="119.0" r="6.5" fill="#f0c8a5"/><rect x="288.7" y="112.0" width="18" height="14" rx="4" fill="#3a4152"/><path d="M130.0,214.0 Q78.0,206.0 78.0,152.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="78.0,138.0 86.5,152.0 69.5,152.0" fill="#5a7be7"/><path d="M250.0,214.0 Q302.0,206.0 302.0,152.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="302.0,138.0 310.5,152.0 293.5,152.0" fill="#5a7be7"/></svg><figcaption>Brazos elevados hacia los lados hasta la altura de los hombros.</figcaption></figure>
+        </div>
+        <h2>5. Elevaciones laterales</h2>
+        <p><span class="pill">10–12 repeticiones</span><span class="pill">Hombros</span></p>
+        <div class="position"><strong>Posición inicial:</strong> de pie, erguida, con una mancuerna en cada mano y brazos al costado.</div>
+        <div class="summary">Elevá ambos brazos hacia los lados hasta la altura de los hombros y bajá en forma controlada.</div>
+        <div class="grid-2">
+          <div class="box"><h3>Cómo hacerlo</h3><ol><li>Flexioná apenas los codos.</li><li>Separá los brazos del cuerpo sin balancearte.</li><li>Subí hasta la altura de hombros.</li><li>Bajá lento, manteniendo el control.</li></ol></div>
+          <div class="box warn"><h3>Qué cuidar</h3><ul><li>No encogas los hombros.</li><li>No uses impulso del tronco.</li><li>Elegí un peso liviano que puedas controlar.</li></ul></div>
+        </div>
+        <a class="back" href="#rutina">← Volver a la rutina</a>
+      </article>
+
+      <article id="estocada" class="card exercise">
+        <div class="frames">
+          <figure class="frame"><span class="tag">1 · Inicio</span><svg viewBox="0 40 380 295" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Estocada hacia atrás, posición inicial"><line x1="14" y1="300" x2="366" y2="300" stroke="#cfd8ea" stroke-width="3" stroke-linecap="round"/><ellipse cx="202" cy="301" rx="46" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M196.0,108.0 L174.0,146.1" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M174.0,146.1 L200.8,175.8" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="200.8" cy="175.8" r="6.2" fill="#d6a984"/><path d="M196.0,184.0 L192.2,239.9" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M192.2,239.9 L187.0,293.6" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M184.0,293.6 L209.0,293.6" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M196.0,184.0 L196.0,108.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="196.0" cy="184.0" r="15.5" fill="#243057"/><path d="M196.0,184.0 L196.7,240.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M196.7,240.0 L196.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M193.0,294.0 L218.0,294.0" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M196.0,108.0 L196.0,96.0" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M180.0,80.0 Q164.0,82.0 167.0,100.0" stroke="#4b3527" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="194.5" cy="83.0" r="19" fill="#4b3527"/><circle cx="199.0" cy="86.5" r="16.5" fill="#f0c8a5"/><circle cx="207.5" cy="85.5" r="1.9" fill="#2b2f42"/><circle cx="196.0" cy="108.0" r="8.5" fill="#5a7be7"/><path d="M196.0,108.0 L170.8,144.0" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M170.8,144.0 L199.0,172.3" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="199.0" cy="172.3" r="6.5" fill="#f0c8a5"/></svg><figcaption>De pie, manos en la cintura, con espacio detrás.</figcaption></figure>
+          <figure class="frame"><span class="tag">2 · Final</span><svg viewBox="0 40 380 295" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Estocada hacia atrás, posición final"><line x1="14" y1="300" x2="366" y2="300" stroke="#cfd8ea" stroke-width="3" stroke-linecap="round"/><ellipse cx="170" cy="301" rx="80" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M182.0,162.0 L160.0,200.1" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M160.0,200.1 L186.8,229.8" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="186.8" cy="229.8" r="6.2" fill="#d6a984"/><path d="M182.0,238.0 L158.3,288.8" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M158.3,288.8 L106.2,274.8" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M104.5,272.3 L118.8,292.8" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M182.0,238.0 L182.0,162.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="182.0" cy="238.0" r="15.5" fill="#243057"/><path d="M182.0,238.0 L238.0,240.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M238.0,240.0 L238.0,294.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M235.0,294.0 L260.0,294.0" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M182.0,162.0 L182.0,150.0" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M166.0,134.0 Q150.0,136.0 153.0,154.0" stroke="#4b3527" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="180.5" cy="137.0" r="19" fill="#4b3527"/><circle cx="185.0" cy="140.5" r="16.5" fill="#f0c8a5"/><circle cx="193.5" cy="139.5" r="1.9" fill="#2b2f42"/><circle cx="182.0" cy="162.0" r="8.5" fill="#5a7be7"/><path d="M182.0,162.0 L156.8,198.0" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M156.8,198.0 L185.0,226.3" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="185.0" cy="226.3" r="6.5" fill="#f0c8a5"/><path d="M292.0,176.0 L292.0,218.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="292.0,232.0 283.5,218.0 300.5,218.0" fill="#5a7be7"/><path d="M222.0,322.0 L142.0,322.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="128.0,322.0 142.0,313.5 142.0,330.5" fill="#5a7be7"/></svg><figcaption>Paso atrás: rodilla delantera a 90° sobre el tobillo, rodilla trasera cerca del piso.</figcaption></figure>
+        </div>
+        <h2>6. Estocada hacia atrás</h2>
+        <p><span class="pill">8–10 por pierna</span><span class="pill">Piernas y glúteos</span></p>
+        <div class="position"><strong>Posición inicial:</strong> de pie, con espacio para dar un paso hacia atrás.</div>
+        <div class="summary">Llevá una pierna atrás, descendé en línea recta y empujá con la pierna delantera para volver.</div>
+        <div class="grid-2">
+          <div class="box"><h3>Cómo hacerlo</h3><ol><li>Parate erguida con pies al ancho de caderas.</li><li>Da un paso atrás con una pierna.</li><li>Flexioná ambas rodillas para bajar.</li><li>Volvé al centro y repetí del otro lado.</li></ol></div>
+          <div class="box warn"><h3>Qué cuidar</h3><ul><li>Mantené el torso erguido.</li><li>No dejes que la rodilla delantera caiga hacia adentro.</li><li>Podés apoyarte en una silla al empezar.</li></ul></div>
+        </div>
+        <a class="back" href="#rutina">← Volver a la rutina</a>
+      </article>
+
+      <article id="plancha" class="card exercise">
+        <div class="frames">
+          <figure class="frame"><span class="tag">Versión fácil · rodillas</span><svg viewBox="0 190 380 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plancha sobre rodillas"><rect x="14" y="300" width="358" height="10" rx="5" fill="#c3d0f3"/><ellipse cx="220" cy="301" rx="130" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M300.0,250.0 L300.0,294.0" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M300.0,294.0 L340.0,294.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="340.0" cy="294.0" r="6.2" fill="#d6a984"/><path d="M227.4,272.5 L173.9,289.0" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M173.9,289.0 L125.3,282.4" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M128.1,281.4 L104.6,289.9" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M227.4,272.5 L300.0,250.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="227.4" cy="272.5" r="15.5" fill="#243057"/><path d="M227.4,272.5 L173.9,289.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M173.9,289.0 L120.3,282.4" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M123.1,281.4 L99.6,289.9" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M300.0,250.0 L311.6,246.9" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="323.7" cy="242.0" r="19" fill="#4b3527"/><circle cx="321.5" cy="247.3" r="16.5" fill="#f0c8a5"/><circle cx="324.7" cy="255.2" r="1.9" fill="#2b2f42"/><circle cx="300.0" cy="250.0" r="8.5" fill="#5a7be7"/><path d="M300.0,250.0 L300.0,294.0" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M300.0,294.0 L340.0,294.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="340.0" cy="294.0" r="6.5" fill="#f0c8a5"/><line x1="165.9" y1="279.0" x2="358.0" y2="234.0" stroke="#f2a03d" stroke-width="3.5" stroke-dasharray="9 7" stroke-linecap="round"/></svg><figcaption>Apoyo en antebrazos y rodillas. Empezá por acá si te cuesta.</figcaption></figure>
+          <figure class="frame"><span class="tag">Versión completa · puntas</span><svg viewBox="0 190 380 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plancha sobre puntas de pies"><rect x="14" y="300" width="358" height="10" rx="5" fill="#c3d0f3"/><ellipse cx="220" cy="301" rx="130" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M300.0,250.0 L300.0,294.0" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M300.0,294.0 L340.0,294.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="340.0" cy="294.0" r="6.2" fill="#d6a984"/><path d="M224.9,261.4 L169.5,269.9" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M169.5,269.9 L123.1,278.0" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M120.8,276.2 L140.5,291.5" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M224.9,261.4 L300.0,250.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="224.9" cy="261.4" r="15.5" fill="#243057"/><path d="M224.9,261.4 L169.5,269.9" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M169.5,269.9 L116.1,278.0" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M113.8,276.2 L133.5,291.5" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M300.0,250.0 L311.9,248.6" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="324.7" cy="245.6" r="19" fill="#4b3527"/><circle cx="321.7" cy="250.5" r="16.5" fill="#f0c8a5"/><circle cx="323.7" cy="258.8" r="1.9" fill="#2b2f42"/><circle cx="300.0" cy="250.0" r="8.5" fill="#5a7be7"/><path d="M300.0,250.0 L300.0,294.0" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M300.0,294.0 L340.0,294.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="340.0" cy="294.0" r="6.5" fill="#f0c8a5"/><line x1="102.1" y1="274.0" x2="358.0" y2="234.0" stroke="#f2a03d" stroke-width="3.5" stroke-dasharray="9 7" stroke-linecap="round"/></svg><figcaption>Apoyo en antebrazos y puntas de pies. Línea recta de la cabeza a los talones.</figcaption></figure>
+        </div>
+        <h2>7. Plancha</h2>
+        <p><span class="pill">20–30 segundos</span><span class="pill">Abdomen y core</span></p>
+        <div class="position"><strong>Posición inicial:</strong> boca abajo, apoyada en antebrazos y puntas de pies o rodillas.</div>
+        <div class="summary">Formá una línea estable desde la cabeza hasta los pies, activando abdomen y glúteos.</div>
+        <div class="grid-2">
+          <div class="box"><h3>Cómo hacerlo</h3><ol><li>Ubicá hombros encima de codos.</li><li>Activá abdomen y glúteos.</li><li>Mantené la mirada hacia el piso.</li><li>Sostené la postura respirando normal.</li></ol></div>
+          <div class="box warn"><h3>Qué cuidar</h3><ul><li>No hundas la cintura.</li><li>No levantes demasiado la cadera.</li><li>Mejor menos tiempo con buena técnica.</li></ul></div>
+        </div>
+        <a class="back" href="#rutina">← Volver a la rutina</a>
+      </article>
+
+      <article id="birddog" class="card exercise">
+        <div class="frames">
+          <figure class="frame"><span class="tag">1 · Inicio</span><svg viewBox="0 150 380 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bird-dog, posición inicial"><rect x="14" y="300" width="358" height="10" rx="5" fill="#c3d0f3"/><ellipse cx="200" cy="301" rx="110" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M260.0,213.0 L245.5,254.5" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M245.5,254.5 L252.0,294.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="252.0" cy="294.0" r="6.2" fill="#d6a984"/><path d="M186.7,233.0 L195.7,289.0" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M195.7,289.0 L141.7,287.1" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M144.6,286.3 L120.5,292.8" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M186.7,233.0 L260.0,213.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="186.7" cy="233.0" r="15.5" fill="#243057"/><path d="M186.7,233.0 L186.7,289.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M186.7,289.0 L132.7,287.1" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M135.6,286.3 L111.5,292.8" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M260.0,213.0 L271.9,211.7" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M286.2,194.2 Q284.5,180.2 284.8,201.2" stroke="#4b3527" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="284.7" cy="208.9" r="19" fill="#4b3527"/><circle cx="281.7" cy="213.7" r="16.5" fill="#f0c8a5"/><circle cx="283.6" cy="222.1" r="1.9" fill="#2b2f42"/><circle cx="260.0" cy="213.0" r="8.5" fill="#5a7be7"/><path d="M260.0,213.0 L248.9,255.6" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M248.9,255.6 L260.0,294.0" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="260.0" cy="294.0" r="6.5" fill="#f0c8a5"/></svg><figcaption>En cuatro apoyos: manos bajo hombros, rodillas bajo caderas, espalda plana.</figcaption></figure>
+          <figure class="frame"><span class="tag">2 · Final</span><svg viewBox="0 150 380 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bird-dog, brazo y pierna extendidos"><rect x="14" y="300" width="358" height="10" rx="5" fill="#c3d0f3"/><ellipse cx="200" cy="301" rx="110" ry="5" fill="#9aa8c9" opacity=".25"/><path d="M260.0,213.0 L248.9,255.6" stroke="#3d5bc2" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M248.9,255.6 L260.0,294.0" stroke="#d6a984" stroke-width="11" stroke-linecap="round" fill="none"/><circle cx="260.0" cy="294.0" r="6.2" fill="#d6a984"/><path d="M186.7,233.0 L130.9,228.1" stroke="#151d3a" stroke-width="21" stroke-linecap="round" fill="none"/><path d="M130.9,228.1 L77.1,223.4" stroke="#151d3a" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M79.7,221.9 L58.0,234.4" stroke="#d2643f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M186.7,233.0 L260.0,213.0" stroke="#5a7be7" stroke-width="30" stroke-linecap="round" fill="none"/><circle cx="186.7" cy="233.0" r="15.5" fill="#243057"/><path d="M186.7,233.0 L186.7,289.0" stroke="#243057" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M186.7,289.0 L132.7,287.1" stroke="#243057" stroke-width="17.5" stroke-linecap="round" fill="none"/><path d="M135.6,286.3 L111.5,292.8" stroke="#f4845f" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M260.0,213.0 L271.9,211.7" stroke="#d6a984" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M286.2,194.2 Q284.5,180.2 284.8,201.2" stroke="#4b3527" stroke-width="9" stroke-linecap="round" fill="none"/><circle cx="284.7" cy="208.9" r="19" fill="#4b3527"/><circle cx="281.7" cy="213.7" r="16.5" fill="#f0c8a5"/><circle cx="283.6" cy="222.1" r="1.9" fill="#2b2f42"/><circle cx="260.0" cy="213.0" r="8.5" fill="#5a7be7"/><path d="M260.0,213.0 L304.0,211.5" stroke="#5a7be7" stroke-width="13.5" stroke-linecap="round" fill="none"/><path d="M304.0,211.5 L344.0,211.5" stroke="#f0c8a5" stroke-width="11.5" stroke-linecap="round" fill="none"/><circle cx="344.0" cy="211.5" r="6.5" fill="#f0c8a5"/><path d="M288.0,176.0 L336.0,176.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="350.0,176.0 336.0,184.5 336.0,167.5" fill="#5a7be7"/><path d="M112.0,196.0 L68.0,196.0" stroke="#5a7be7" stroke-width="5" stroke-linecap="round" fill="none"/><polygon points="54.0,196.0 68.0,187.5 68.0,204.5" fill="#5a7be7"/></svg><figcaption>Un brazo y la pierna opuesta extendidos, sin girar la cadera.</figcaption></figure>
+        </div>
+        <h2>8. Bird-dog</h2>
+        <p><span class="pill">8–10 por lado</span><span class="pill">Core, espalda y equilibrio</span></p>
+        <div class="position"><strong>Posición inicial:</strong> en cuatro apoyos, con manos debajo de hombros y rodillas debajo de caderas.</div>
+        <div class="summary">Extendé un brazo y la pierna opuesta, manteniendo la pelvis estable. Volvé al centro y alterná.</div>
+        <div class="grid-2">
+          <div class="box"><h3>Cómo hacerlo</h3><ol><li>Encontrá una posición estable en cuatro apoyos.</li><li>Estirá brazo derecho y pierna izquierda.</li><li>Sostené un instante sin girar la cadera.</li><li>Volvé al centro y cambiá de lado.</li></ol></div>
+          <div class="box warn"><h3>Qué cuidar</h3><ul><li>Mové lento y controlado.</li><li>Imaginá una mesa firme en la espalda.</li><li>No arquees ni rotes el torso.</li></ul></div>
+        </div>
+        <a class="back" href="#rutina">← Volver a la rutina</a>
+      </article>
+
+    </section>
+
+    <section id="progreso" data-view class="card hidden">
+      <h2>Progresión</h2>
+      <div class="grid-2">
+        <div class="accent-box"><strong>Semanas 1–2</strong><br>2 vueltas · 10–12 repeticiones.</div>
+        <div class="accent-box"><strong>Semanas 3–4</strong><br>3 vueltas · 12–15 repeticiones.</div>
+        <div class="accent-box"><strong>Semanas 5–6</strong><br>Mantené 3 vueltas y aumentá un poco la resistencia.</div>
+        <div class="accent-box"><strong>Semanas 7–8</strong><br>Pasá algunos ejercicios a una versión más difícil.</div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="nav">
+    <div class="bar">
+      <a href="#inicio" data-nav="inicio"><span class="ico">⌂</span>Inicio</a>
+      <a href="#rutina" data-nav="rutina"><span class="ico">▤</span>Rutina</a>
+      <a href="#fichas" data-nav="fichas"><span class="ico">☰</span>Fichas</a>
+      <a href="#progreso" data-nav="progreso"><span class="ico">✓</span>Progreso</a>
+    </div>
+  </nav>
+  <script>
+  (function(){
+    var VIEWS=['inicio','rutina','fichas','progreso'];
+    var KEY='calistenia-progreso-v1';
+    var rows=[].slice.call(document.querySelectorAll('.row'));
+    var total=rows.length;
+    var memo={};
+    function today(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+    function load(){
+      try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.day===today())return s.done||{};}catch(e){}
+      return memo.day===today()?memo.done:{};
+    }
+    function save(done){
+      memo={day:today(),done:done};
+      try{localStorage.setItem(KEY,JSON.stringify(memo));}catch(e){}
+    }
+    function render(){
+      var done=load(),n=0;
+      rows.forEach(function(r){
+        var on=!!done[r.getAttribute('data-id')];
+        if(on)n++;
+        r.classList.toggle('done',on);
+        r.querySelector('.check').setAttribute('aria-pressed',on?'true':'false');
+      });
+      var pct=Math.round(n*100/total);
+      document.getElementById('pct').textContent=pct+'%';
+      document.getElementById('count').textContent=n+' de '+total+' ejercicios';
+      document.getElementById('fill').style.width=pct+'%';
+      document.getElementById('track').setAttribute('aria-valuenow',pct);
+      document.getElementById('rcount').textContent=n+'/'+total+' hechos';
+      document.getElementById('msg').textContent = n===total ? '¡Rutina completa! Buen trabajo.' :
+        (n===0 ? 'Marcá cada ejercicio en la pestaña Rutina y la barra avanza sola.' : 'Vas bien. Faltan '+(total-n)+'.');
+    }
+    rows.forEach(function(r){
+      r.querySelector('.check').addEventListener('click',function(){
+        var done=load(),id=r.getAttribute('data-id');
+        if(done[id])delete done[id];else done[id]=1;
+        save(done);render();
+      });
+    });
+    document.getElementById('reset').addEventListener('click',function(){save({});render();});
+
+    var sections=VIEWS.map(function(v){return document.getElementById(v);});
+    var navs=[].slice.call(document.querySelectorAll('[data-nav]'));
+    function show(){
+      var id=(location.hash||'').replace('#','')||'inicio';
+      var view=id,target=null;
+      if(VIEWS.indexOf(id)<0){
+        var el=document.getElementById(id);
+        if(el&&document.getElementById('fichas').contains(el)){view='fichas';target=el;}else view='inicio';
+      }
+      sections.forEach(function(s){s.classList.toggle('hidden',s.id!==view);});
+      navs.forEach(function(a){a.classList.toggle('active',a.getAttribute('data-nav')===view);});
+      if(target){target.scrollIntoView();}else{window.scrollTo(0,0);}
+    }
+    window.addEventListener('hashchange',show);
+    render();show();
+  })();
+  </script>
+
+</body>
+
+</html>
